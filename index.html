@@ -3,27 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Li Acoustics</title>
+  <title>Li Acoustics — Psychoacoustics</title>
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], tags: 'ams' },
+      options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
       font-size: 16px;
       background: #fff;
       color: #202122;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     a { color: #3366cc; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── Page shell ── */
-    .page {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+    /* ── Shell ── */
+    .page { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
 
     /* ── Site header ── */
     #site-header {
@@ -31,85 +34,79 @@
       padding: 0.6rem 0;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .site-name {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       color: #202122;
+      letter-spacing: 0.02em;
     }
 
-    .site-nav {
-      display: flex;
-      gap: 1.2rem;
-      font-size: 0.85rem;
-    }
+    .site-name span { font-weight: normal; color: #54595d; font-size: 0.9rem; }
 
-    /* ── Article layout ── */
+    .site-nav { display: flex; gap: 1.2rem; font-size: 0.85rem; }
+
+    /* ── Two-column layout ── */
     #content {
       display: flex;
       gap: 2rem;
       padding: 1.5rem 0 3rem;
+      align-items: flex-start;
     }
 
-    /* ── Main column ── */
-    #main {
-      flex: 1;
-      min-width: 0;
-    }
+    #main { flex: 1; min-width: 0; }
 
-    /* Article title */
+    /* ── Article title ── */
     h1.article-title {
       font-family: 'Linux Libertine', 'Georgia', serif;
-      font-size: 2rem;
+      font-size: 1.95rem;
       font-weight: normal;
       border-bottom: 1px solid #a2a9b1;
-      padding-bottom: 0.2rem;
-      margin-bottom: 0.5rem;
-      color: #000;
+      padding-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
     }
 
-    .article-subtitle {
-      font-size: 0.9rem;
-      color: #54595d;
-      margin-bottom: 1.2rem;
-      font-style: italic;
-    }
+    .article-meta { font-size: 0.83rem; color: #54595d; margin-bottom: 1.2rem; }
+    .article-meta a { color: #54595d; }
 
-    /* Lead paragraph */
-    .lead {
-      margin-bottom: 1rem;
-    }
-
-    /* Section headings */
+    /* ── Headings ── */
     h2 {
       font-family: 'Linux Libertine', 'Georgia', serif;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: normal;
       border-bottom: 1px solid #a2a9b1;
-      padding-bottom: 0.2rem;
-      margin: 1.6rem 0 0.6rem;
-      color: #000;
+      padding-bottom: 0.15rem;
+      margin: 1.8rem 0 0.6rem;
     }
 
     h3 {
       font-size: 1rem;
-      margin: 1rem 0 0.3rem;
-      color: #202122;
+      font-weight: bold;
+      margin: 1.2rem 0 0.4rem;
     }
 
-    p { margin-bottom: 0.8rem; }
+    h4 {
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: normal;
+      margin: 1rem 0 0.3rem;
+    }
 
-    /* ── Infobox (right-aligned) ── */
+    p { margin-bottom: 0.85rem; }
+
+    /* ── Infobox ── */
     .infobox {
       float: right;
       clear: right;
       margin: 0 0 1rem 1.5rem;
       border: 1px solid #a2a9b1;
       background: #f8f9fa;
-      font-size: 0.85rem;
-      width: 260px;
+      font-size: 0.84rem;
+      width: 270px;
     }
 
     .infobox-title {
@@ -117,302 +114,401 @@
       text-align: center;
       font-weight: bold;
       padding: 0.4rem 0.6rem;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
-    .infobox-image {
-      width: 100%;
-      padding: 0.6rem;
-      text-align: center;
-    }
-
-    .infobox-image svg {
-      width: 100%;
-      height: auto;
-    }
+    .infobox-image { padding: 0.5rem; text-align: center; }
+    .infobox-image svg { width: 100%; height: auto; }
 
     .infobox-caption {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #54595d;
       text-align: center;
-      padding: 0 0.6rem 0.4rem;
+      padding: 0 0.6rem 0.5rem;
+      line-height: 1.4;
     }
 
-    .infobox table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
+    .infobox table { width: 100%; border-collapse: collapse; }
     .infobox td {
-      padding: 0.25rem 0.6rem;
+      padding: 0.22rem 0.6rem;
       vertical-align: top;
       border-top: 1px solid #eaecf0;
     }
+    .infobox td:first-child { font-weight: bold; white-space: nowrap; }
 
-    .infobox td:first-child {
-      font-weight: bold;
-      white-space: nowrap;
-      color: #202122;
-    }
-
-    /* ── Table of contents ── */
-    #toc {
-      border: 1px solid #a2a9b1;
-      background: #f8f9fa;
-      display: inline-block;
-      padding: 0.6rem 1rem 0.6rem 0.8rem;
-      margin: 0.6rem 0 1rem;
-      font-size: 0.9rem;
-      min-width: 200px;
-    }
-
-    #toc .toc-title {
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
-
-    #toc ol {
-      padding-left: 1.4rem;
-    }
-
-    #toc li { margin: 0.15rem 0; }
-
-    #toc ol ol {
-      padding-left: 1.2rem;
-      font-size: 0.85rem;
-    }
-
-    /* ── Sidebar ── */
-    #sidebar {
-      width: 200px;
-      flex-shrink: 0;
-      font-size: 0.85rem;
-    }
-
-    .sidebar-box {
-      border: 1px solid #a2a9b1;
-      margin-bottom: 1.2rem;
-    }
-
-    .sidebar-box-title {
-      background: #cee0f2;
-      padding: 0.3rem 0.6rem;
-      font-weight: bold;
-      font-size: 0.85rem;
-    }
-
-    .sidebar-box ul {
-      list-style: none;
-      padding: 0.4rem 0.6rem;
-    }
-
-    .sidebar-box li {
-      padding: 0.15rem 0;
-      border-bottom: 1px solid #eaecf0;
-    }
-
-    .sidebar-box li:last-child { border-bottom: none; }
-
-    /* ── Figure ── */
+    /* ── Figures ── */
     figure {
       float: right;
       clear: right;
-      margin: 0 0 0.8rem 1.2rem;
+      margin: 0.3rem 0 0.8rem 1.3rem;
       border: 1px solid #a2a9b1;
       background: #f8f9fa;
       padding: 4px;
-      width: 220px;
-      font-size: 0.8rem;
+      width: 230px;
+      font-size: 0.79rem;
       text-align: center;
     }
 
     figure svg { width: 100%; }
-    figcaption { padding: 4px 2px 2px; color: #54595d; }
+    figcaption { padding: 4px 3px 3px; color: #54595d; line-height: 1.4; }
+
+    /* ── TOC ── */
+    #toc {
+      border: 1px solid #a2a9b1;
+      background: #f8f9fa;
+      display: inline-block;
+      padding: 0.55rem 1.1rem 0.55rem 0.8rem;
+      margin: 0.5rem 0 1.2rem;
+      font-size: 0.88rem;
+    }
+
+    .toc-title { font-weight: bold; text-align: center; margin-bottom: 0.35rem; }
+    #toc ol { padding-left: 1.4rem; }
+    #toc li { margin: 0.12rem 0; }
+    #toc ol ol { padding-left: 1.2rem; font-size: 0.83rem; }
+
+    /* ── Equation display ── */
+    .equation-block {
+      margin: 0.6rem 2rem 0.8rem;
+      overflow-x: auto;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 195px;
+      flex-shrink: 0;
+      font-size: 0.84rem;
+    }
+
+    .sidebar-box { border: 1px solid #a2a9b1; margin-bottom: 1.2rem; }
+    .sidebar-box-title {
+      background: #cee0f2;
+      padding: 0.3rem 0.6rem;
+      font-weight: bold;
+      font-size: 0.84rem;
+    }
+    .sidebar-box ul { list-style: none; padding: 0.4rem 0.6rem; }
+    .sidebar-box li {
+      padding: 0.15rem 0;
+      border-bottom: 1px solid #eaecf0;
+    }
+    .sidebar-box li:last-child { border-bottom: none; }
+
+    /* ── References ── */
+    .references { font-size: 0.85rem; }
+    .references ol { padding-left: 1.6rem; }
+    .references li { margin-bottom: 0.4rem; line-height: 1.5; }
+
+    /* ── Clearfix ── */
+    .cf::after { content: ''; display: table; clear: both; }
 
     /* ── Footer ── */
     #footer {
       border-top: 1px solid #a2a9b1;
       padding: 1rem 0;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: #54595d;
       text-align: center;
     }
 
-    /* ── Utility ── */
-    .clearfix::after { content: ''; display: table; clear: both; }
-
-    @media (max-width: 680px) {
+    @media (max-width: 700px) {
       #content { flex-direction: column; }
       #sidebar { width: 100%; }
-      .infobox { float: none; width: 100%; margin: 0 0 1rem; }
-      figure { float: none; width: 100%; margin: 0 0 1rem; }
+      .infobox, figure { float: none; width: 100%; margin: 0 0 1rem; }
     }
   </style>
 </head>
 <body>
-
 <div class="page">
 
-  <!-- Site header -->
+  <!-- Header -->
   <header id="site-header">
-    <span class="site-name">Li Acoustics</span>
+    <div class="site-name">Li Acoustics &nbsp;<span>/ Psychoacoustics</span></div>
     <nav class="site-nav">
-      <a href="#">Services</a>
-      <a href="#">Projects</a>
+      <a href="#">Articles</a>
+      <a href="#">Concepts</a>
       <a href="#">About</a>
-      <a href="#">Contact</a>
     </nav>
   </header>
 
-  <!-- Content -->
   <div id="content">
 
     <!-- Main article -->
-    <article id="main" class="clearfix">
+    <article id="main" class="cf">
 
-      <h1 class="article-title">Li Acoustics</h1>
-      <p class="article-subtitle">Acoustic consultancy practice · United Kingdom</p>
+      <h1 class="article-title">Psychoacoustic Tonality: Models and Their Accuracy in Vehicle Cabin Noise</h1>
+      <div class="article-meta">
+        By <a href="#">Zhenxian Li</a> &nbsp;·&nbsp; Li Acoustics &nbsp;·&nbsp; December 2025
+      </div>
 
       <!-- Infobox -->
       <div class="infobox">
-        <div class="infobox-title">Li Acoustics Ltd.</div>
+        <div class="infobox-title">Psychoacoustic Tonality</div>
         <div class="infobox-image">
-          <!-- Standing wave illustration -->
-          <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
-            <rect width="240" height="90" fill="#fff"/>
-            <!-- mode 1 -->
-            <path d="M10,45 Q70,5 130,45 Q190,85 230,45" fill="none" stroke="#3366cc" stroke-width="1.5"/>
-            <!-- mode 2 faint -->
-            <path d="M10,45 Q40,15 70,45 Q100,75 130,45 Q160,15 190,45 Q210,65 230,45" fill="none" stroke="#3366cc" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.45"/>
-            <!-- node markers -->
-            <circle cx="10"  cy="45" r="2.5" fill="#202122"/>
-            <circle cx="130" cy="45" r="2.5" fill="#202122"/>
-            <circle cx="230" cy="45" r="2.5" fill="#202122"/>
-            <!-- axis -->
-            <line x1="10" y1="45" x2="230" y2="45" stroke="#a2a9b1" stroke-width="0.7"/>
+          <svg viewBox="0 0 250 110" xmlns="http://www.w3.org/2000/svg">
+            <rect width="250" height="110" fill="#fff"/>
+            <!-- frequency axis -->
+            <line x1="25" y1="90" x2="235" y2="90" stroke="#202122" stroke-width="1"/>
+            <line x1="25" y1="10" x2="25" y2="90" stroke="#202122" stroke-width="1"/>
+            <!-- axis labels -->
+            <text x="128" y="103" font-size="9" fill="#54595d" text-anchor="middle">Frequency</text>
+            <text x="10" y="52" font-size="9" fill="#54595d" text-anchor="middle" transform="rotate(-90,10,52)">Level (dB)</text>
+            <!-- broadband noise floor -->
+            <polyline points="25,70 50,68 75,66 100,65 125,65 150,66 175,68 200,70 225,72" fill="none" stroke="#a2a9b1" stroke-width="1.5"/>
+            <!-- tonal peaks -->
+            <line x1="90" y1="65" x2="90" y2="28" stroke="#3366cc" stroke-width="2.5"/>
+            <line x1="140" y1="65" x2="140" y2="18" stroke="#3366cc" stroke-width="2.5"/>
+            <line x1="185" y1="67" x2="185" y2="42" stroke="#3366cc" stroke-width="2"/>
+            <!-- delta L annotation -->
+            <line x1="148" y1="18" x2="148" y2="65" stroke="#cc3333" stroke-width="0.8" stroke-dasharray="3 2"/>
+            <text x="150" y="44" font-size="8" fill="#cc3333">ΔL</text>
+            <!-- legend -->
+            <line x1="30" y1="100" x2="50" y2="100" stroke="#a2a9b1" stroke-width="1.5"/>
+            <text x="53" y="103" font-size="7.5" fill="#54595d">noise floor</text>
+            <line x1="110" y1="100" x2="125" y2="100" stroke="#3366cc" stroke-width="2.5"/>
+            <text x="128" y="103" font-size="7.5" fill="#54595d">tone</text>
           </svg>
         </div>
-        <div class="infobox-caption">Standing-wave modes in a rectangular room</div>
+        <div class="infobox-caption">Tonal components (blue) rising above a broadband noise floor (grey); $\Delta L$ is the level excess used in tonality assessment.</div>
         <table>
-          <tr><td>Founded</td><td>2018</td></tr>
-          <tr><td>Location</td><td>London, UK</td></tr>
-          <tr><td>Speciality</td><td>Architectural &amp; environmental acoustics</td></tr>
-          <tr><td>Website</td><td><a href="#">liacoustics.co.uk</a></td></tr>
+          <tr><td>Domain</td><td>Psychoacoustics, NVH</td></tr>
+          <tr><td>Key metric</td><td>Tonality $K$ or $T$</td></tr>
+          <tr><td>Standards</td><td>ECMA-418-2, ISO 1996</td></tr>
+          <tr><td>Applications</td><td>EV/ICEV cabin noise, product sound quality</td></tr>
         </table>
       </div>
 
       <!-- Lead -->
-      <p class="lead">
-        <b>Li Acoustics</b> is a specialist acoustic consultancy based in the United Kingdom,
-        providing services in <a href="#">architectural acoustics</a>,
-        <a href="#">environmental noise assessment</a>, and
-        <a href="#">vibration control</a> for residential, commercial, and performance-space projects.
+      <p>
+        <b>Psychoacoustic tonality</b> is a perceptual measure of how strongly tonal components — pure tones, narrow-band harmonics, or tonal complexes — stand out from an otherwise broadband or noisy sound. A sound with high tonality is one in which the listener clearly perceives a discrete pitch or whistle above the background noise. Because tonal noise is often rated as more annoying than broadband noise at the same overall sound pressure level, tonality has become a key metric in product sound quality engineering and in environmental noise regulation.
       </p>
       <p>
-        Founded in 2018, the practice applies evidence-based acoustic engineering to produce
-        environments that are both functionally correct and perceptually comfortable.
-        Projects range from recording studios and auditoria to planning-stage noise surveys for
-        mixed-use developments.
+        This article introduces the concept of tonality, describes the principal tone-prominence descriptors used in engineering practice, and compares two widely used computational models: the empirical approach developed by <a href="#ref-aures">Aures (1985)</a>, and the hearing-model-based approach standardised in <a href="#ref-ecma">ECMA-418-2</a>. The comparison is made in the context of electric vehicle (EV) and internal-combustion-engine vehicle (ICEV) cabin noise, where tonality assessment presents specific challenges.
       </p>
 
       <!-- TOC -->
-      <div id="toc">
+      <nav id="toc">
         <div class="toc-title">Contents</div>
         <ol>
-          <li><a href="#background">Background</a></li>
-          <li><a href="#services">Services</a>
+          <li><a href="#what-is-tonality">What is psychoacoustic tonality?</a></li>
+          <li><a href="#prominence">Tone prominence descriptors</a>
             <ol>
-              <li><a href="#room-acoustics">Room acoustics</a></li>
-              <li><a href="#noise-control">Noise &amp; vibration</a></li>
-              <li><a href="#av">AV systems</a></li>
+              <li><a href="#tnr">Tone-to-noise ratio (TNR)</a></li>
+              <li><a href="#pr">Prominence ratio (PR)</a></li>
+              <li><a href="#limitations">Limitations</a></li>
             </ol>
           </li>
-          <li><a href="#methodology">Methodology</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#models">Tonality models</a>
+            <ol>
+              <li><a href="#aures">Aures' model</a></li>
+              <li><a href="#ecma">ECMA-418-2 hearing model</a></li>
+            </ol>
+          </li>
+          <li><a href="#comparison">Comparison and discussion</a></li>
+          <li><a href="#references">References</a></li>
         </ol>
+      </nav>
+
+      <!-- Section 1 -->
+      <h2 id="what-is-tonality">1. What is psychoacoustic tonality?</h2>
+      <p>
+        In <a href="#">psychoacoustics</a>, <em>tonality</em> refers to the perceptual salience of tonal components embedded in an otherwise broadband sound. Two signals with similar overall level can differ strongly in perceived tonality depending on three factors:
+      </p>
+      <ul style="margin: 0 0 0.8rem 1.8rem; line-height:1.8;">
+        <li>how much energy is concentrated into audible tonal components;</li>
+        <li>how strongly those components are <a href="#">masked</a> by neighbouring spectral content;</li>
+        <li>how the auditory system integrates information across time and across <a href="#">critical bands</a>.</li>
+      </ul>
+      <p>
+        Tonal noise is often perceived as more annoying than broadband noise at the same sound pressure level, a finding supported by numerous listening studies. Consequently, quantifying tonality is important both in <a href="#">product sound quality</a> assessment and in environmental noise control. In engineering practice, tonality metrics aim to convert this perceptual attribute into a reproducible quantity that can be compared across operating conditions — for instance, across different engine orders or electric-motor tonal components — and across design iterations.
+      </p>
+
+      <!-- Section 2 -->
+      <h2 id="prominence">2. Tone prominence descriptors</h2>
+      <p>
+        Before introducing full tonality models, it is useful to distinguish local <em>tone prominence</em> descriptors from global <em>tonality</em> metrics. Both attempt to characterise how much a tonal component stands out from its background, but they do so at different levels of complexity.
+      </p>
+
+      <h3 id="tnr">2.1 Tone-to-noise ratio (TNR)</h3>
+      <p>
+        The most direct descriptor is the <a href="#">tone-to-noise ratio</a> (TNR), which compares the level of a candidate tonal component $L_\mathrm{tone}$ with an estimate of the surrounding background level $L_\mathrm{bg}$ derived from adjacent frequency groups or critical bands:
+      </p>
+      <div class="equation-block">
+        $$\mathrm{TNR} \approx L_\mathrm{tone} - L_\mathrm{bg} \quad [\mathrm{dB}]$$
       </div>
-
-      <!-- Background -->
-      <h2 id="background">Background</h2>
       <p>
-        <a href="#">Acoustics</a> is the branch of physics concerned with the study of mechanical
-        waves — including sound, infrasound, and ultrasound — and their interaction with matter.
-        Applied architectural acoustics addresses how sound behaves within built spaces, influencing
-        intelligibility, reverberation time (<i>T</i><sub>60</sub>), and occupant comfort.
-      </p>
-      <p>
-        Li Acoustics was established to address a gap in practice between high-level acoustic
-        modelling and on-site delivery. The consultancy works alongside architects, engineers, and
-        contractors from <a href="#">RIBA Stage 1</a> through post-occupancy evaluation.
+        A larger TNR indicates a more salient tonal component. A high TNR means the tone rises well above the local noise floor and is likely to be audible as a discrete component.
       </p>
 
-      <!-- Services -->
-      <h2 id="services">Services</h2>
+      <h3 id="pr">2.2 Prominence ratio (PR)</h3>
+      <p>
+        <a href="#">Prominence ratio</a> (PR) follows a similar idea but uses a critical-band representation and constructs the background estimate from neighbouring bands. If the energy in the critical band containing the tone is sufficiently larger than that in the adjacent bands, the component is classified as prominent. Both TNR and PR are included in international standards (notably <a href="#">ISO 1996-2</a>) as objective indicators of tonal prominence and are useful for locating and ranking tonal components.
+      </p>
 
+      <h3 id="limitations">2.3 Limitations of simple descriptors</h3>
+
+      <!-- RT60-style figure for masking -->
       <figure>
-        <!-- RT60 decay curve -->
-        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
-          <rect width="200" height="130" fill="#fff"/>
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="140" fill="#fff"/>
           <!-- axes -->
-          <line x1="30" y1="10" x2="30" y2="105" stroke="#202122" stroke-width="1"/>
-          <line x1="30" y1="105" x2="185" y2="105" stroke="#202122" stroke-width="1"/>
-          <!-- axis labels -->
-          <text x="14" y="58" font-size="9" fill="#54595d" transform="rotate(-90,14,58)">Level (dB)</text>
-          <text x="100" y="122" font-size="9" fill="#54595d" text-anchor="middle">Time (s)</text>
-          <!-- decay line -->
-          <polyline points="30,18 55,38 80,55 105,68 130,79 155,88 180,96" fill="none" stroke="#3366cc" stroke-width="1.8"/>
-          <!-- T60 annotation -->
-          <line x1="30" y1="18" x2="180" y2="18" stroke="#a2a9b1" stroke-width="0.6" stroke-dasharray="3 2"/>
-          <line x1="30" y1="78" x2="180" y2="78" stroke="#a2a9b1" stroke-width="0.6" stroke-dasharray="3 2"/>
-          <text x="36" y="16" font-size="7.5" fill="#54595d">0 dB</text>
-          <text x="36" y="76" font-size="7.5" fill="#54595d">−60 dB</text>
-          <!-- T60 bracket -->
-          <line x1="155" y1="18" x2="155" y2="88" stroke="#cc3333" stroke-width="1" stroke-dasharray="3 2"/>
-          <text x="157" y="56" font-size="8" fill="#cc3333">T₆₀</text>
+          <line x1="28" y1="8" x2="28" y2="115" stroke="#202122" stroke-width="1"/>
+          <line x1="28" y1="115" x2="188" y2="115" stroke="#202122" stroke-width="1"/>
+          <text x="108" y="130" font-size="9" fill="#54595d" text-anchor="middle">Frequency (Bark)</text>
+          <text x="12" y="65" font-size="9" fill="#54595d" text-anchor="middle" transform="rotate(-90,12,65)">Level (dB)</text>
+          <!-- masking curve -->
+          <path d="M35,90 Q60,40 85,38 Q110,36 130,55 Q150,72 175,90" fill="#cee0f2" stroke="#3366cc" stroke-width="1" opacity="0.7"/>
+          <!-- noise floor -->
+          <line x1="28" y1="95" x2="188" y2="95" stroke="#a2a9b1" stroke-width="1" stroke-dasharray="4 2"/>
+          <!-- tone above masking curve -->
+          <line x1="85" y1="38" x2="85" y2="12" stroke="#cc3333" stroke-width="2"/>
+          <!-- tone below masking curve -->
+          <line x1="130" y1="55" x2="130" y2="48" stroke="#a2a9b1" stroke-width="2"/>
+          <!-- labels -->
+          <text x="87" y="25" font-size="7.5" fill="#cc3333">audible tone</text>
+          <text x="110" y="52" font-size="7" fill="#54595d">masked</text>
+          <text x="40" y="108" font-size="7.5" fill="#3366cc">masking threshold</text>
         </svg>
-        <figcaption>Typical reverberation decay curve; <i>T</i><sub>60</sub> is the time for the sound level to fall by 60 dB.</figcaption>
+        <figcaption>A tone above the masking threshold (red) is audible; one falling below (grey) is masked and does not contribute to perceived tonality.</figcaption>
       </figure>
 
-      <h3 id="room-acoustics">Room acoustics</h3>
       <p>
-        Room acoustic design encompasses the control of <a href="#">reverberation time</a>,
-        early reflections, and low-frequency <a href="#">room modes</a>.
-        Li Acoustics uses a combination of <a href="#">geometric ray-tracing</a> software and
-        wave-based finite-element methods to predict and optimise acoustic conditions before
-        construction begins.
+        Despite their simplicity, TNR and PR are not complete tonality models. They do not explicitly account for how multiple tones combine, how the overall signal-to-noise situation modulates perceived tonality, or how results should be calibrated onto a perceptual scale. Because they rely mainly on spectral level differences, they do not fully represent psychoacoustic phenomena such as absolute audibility, masking, and the interaction between time and frequency resolution.
+      </p>
+      <p>
+        For example, a tone that barely exceeds the local background may yield a similar TNR at low and high absolute sound levels, even though its perceptual salience can differ markedly. Likewise, high spectral resolution requires long analysis windows, which may under-represent short-lived or rapidly varying tonal events. These limitations motivated the development of more complete psychoacoustic tonality models.
       </p>
 
-      <h3 id="noise-control">Noise &amp; vibration control</h3>
+      <!-- Section 3 -->
+      <h2 id="models">3. Tonality models</h2>
       <p>
-        Environmental noise assessments are conducted in accordance with
-        <a href="#">BS 4142:2014</a> and <a href="#">PPG 24</a> guidance.
-        Services include facade sound insulation design, mechanical plant noise surveys,
-        and structural vibration measurement to <a href="#">BS 6472</a> criteria.
+        Two principal model families are compared here. The <a href="#aures">Aures (1985)</a> family starts from identified tonal components and combines them through empirical weighting functions into a single tonality estimate. The <a href="#ecma">ECMA-418-2</a> hearing-model approach operates on auditory-filtered signals and uses autocorrelation-based periodicity analysis within critical bands to distinguish tonal from non-tonal components.
       </p>
 
-      <h3 id="av">AV systems consultancy</h3>
+      <h3 id="aures">3.1 Aures' tonality model (<em>Klanghaftigkeit</em>)</h3>
       <p>
-        For performance and corporate venues, Li Acoustics provides independent specification
-        and procurement oversight for <a href="#">loudspeaker system</a> design, room
-        equalisation, and speech-intelligibility verification to <a href="#">STI</a> standards.
+        Aures' model treats tonality — denoted <em>Klanghaftigkeit</em>, symbol $K$ — as the combination of two contributions: (a) a <em>tonal-component contribution</em> derived from all audible tonal components in the spectrum, and (b) a <em>noise-loudness contribution</em> that penalises situations where noise dominates the overall loudness.
+      </p>
+      <p>
+        For each audible tonal component $k$ with level excess $\Delta L_k > 0$ above its local background, centre frequency $f_k$, and effective bandwidth in Bark $\Delta z_k$, Aures introduces three psychoacoustically motivated weighting functions. A frequency-dependent weight $w_2(f)$, band-pass shaped around the region most relevant for pitch perception:
+      </p>
+      <div class="equation-block">
+        $$w_2(f)=\left(\frac{1}{1+0.2\left(\dfrac{0.7\,\mathrm{kHz}}{f}-\dfrac{f}{0.7\,\mathrm{kHz}}\right)^2}\right)^{0.29}$$
+      </div>
+      <p>
+        A saturation-type weight for level excess — reflecting the fact that perceived tonality grows quickly at first but eventually saturates:
+      </p>
+      <div class="equation-block">
+        $$w_3(\Delta L)=1-\exp\!\left(-\frac{\Delta L}{15\,\mathrm{dB}}\right)$$
+      </div>
+      <p>
+        Together with a bandwidth-related weight $w_1(\Delta z)$, the overall tonal weight is computed as a quadratic mean over all tonal components:
+      </p>
+      <div class="equation-block">
+        $$W_T = \sqrt{\sum_k \left[w_1'(\Delta z_k)\,w_2'(f_k)\,w_3'(\Delta L_k)\right]^2}$$
+      </div>
+      <p>
+        To represent the dominance of tonal over noise energy, the model computes the loudness of the noise-only part (tonal components removed), $N_G$, and compares it to the total loudness $N$:
+      </p>
+      <div class="equation-block">
+        $$W_{QT}=1-\frac{N_G}{N}$$
+      </div>
+      <p>
+        Finally, tonality is obtained by combining both contributions with a calibration constant $c$ and empirical exponents:
+      </p>
+      <div class="equation-block">
+        $$K \;=\; c\; W_T^{0.29}\; W_{QT}^{0.79}$$
+      </div>
+      <p>
+        where $c$ is chosen such that a reference 1 kHz pure tone at a prescribed level yields $K = 1$. The exponents reflect the compressive nature of tonality perception: large increases in tonal strength produce only moderate increases in perceived tonality, much like the <a href="#">decibel scale</a> itself compresses the enormous range of human hearing into a manageable number.
       </p>
 
-      <!-- Methodology -->
-      <h2 id="methodology">Methodology</h2>
+      <h4>Improved Aures variants</h4>
       <p>
-        All projects follow a structured workflow: site survey and background noise measurement,
-        parametric acoustic modelling, design-team coordination, specification writing, and
-        post-completion measurement verification. Reports are produced to a standard suitable
-        for <a href="#">planning authority</a> submission where required.
+        Recent work (Estreder et al., 2023) revisits Aures' procedure for complex sounds by refining spectral resolution, tonal-detection criteria, and the exponent structure. In this framework, the noise-loudness contribution is expressed explicitly as a <em>loudness weighting</em>:
+      </p>
+      <div class="equation-block">
+        $$W_L = 1 - \frac{L_N}{L_S}$$
+      </div>
+      <p>
+        where $L_N$ is the loudness level of the signal after removing detected tonal components and $L_S$ is the loudness level of the full signal frame. The frame-wise tonality estimate becomes:
+      </p>
+      <div class="equation-block">
+        $$\ell_m = \min\!\left(C_{1\mathrm{k},60}\,W_T^{0.29}\,W_L^{0.79},\;1\right)$$
+      </div>
+      <p>
+        with $C_{1\mathrm{k},60}$ calibrated so that a 1 kHz, 60 dB SPL pure tone yields $\ell_m = 1$. These refinements preserve the basic Aures structure while improving agreement with listening tests for dense harmonic spectra and time-varying conditions typical of EV motor noise.
       </p>
 
-      <!-- Contact -->
-      <h2 id="contact">Contact</h2>
+      <h3 id="ecma">3.2 Hearing-model-based tonality (ECMA-418-2)</h3>
       <p>
-        Enquiries may be directed to <a href="mailto:hello@liacoustics.co.uk">hello@liacoustics.co.uk</a>.
-        The practice is registered in England and Wales.
+        A more recent and comprehensive approach is standardised in ECMA-418-2 and implemented in commercial tools such as the HEAD acoustics "Tonality (Hearing Model)" analysis. Rather than starting from explicit spectral tone extraction alone, this method simulates key stages of human auditory processing and operates on a critical-band representation.
       </p>
+      <p>
+        The key step is estimating a normalised autocorrelation function $\varphi_{l,z}(m)$ in each auditory band $z$ and time block $l$. Intuitively, a periodic or tonal signal produces a pronounced autocorrelation peak at its period, whereas random noise does not — the model exploits this difference to separate tonal from non-tonal energy in the loudness domain.
+      </p>
+      <p>
+        Tonal candidates obtained from autocorrelation peaks are mapped to an estimated specific loudness of the tonal component $N'_\mathrm{tonal}(l,z)$. The specific loudness of the noise component in each band is then:
+      </p>
+      <div class="equation-block">
+        $$N'_\mathrm{noise}(l,z) = N'_\mathrm{signal}(l,z)\,h_\mathrm{LP}(l) - N'_\mathrm{tonal}(l,z)$$
+      </div>
+      <p>
+        An overall loudness signal-to-noise ratio is computed across all bands:
+      </p>
+      <div class="equation-block">
+        $$\mathrm{SNR}(l) = \frac{\displaystyle\max_{z}\, N'_\mathrm{tonal}(l,z)}{\varepsilon + \displaystyle\sum_{z} N'_\mathrm{noise}(l,z)}$$
+      </div>
+      <p>
+        A nonlinear scaling factor $q(l)$, with parameters $A$ and $B$ specified by the standard, compresses this SNR into a perceptually meaningful range:
+      </p>
+      <div class="equation-block">
+        $$q(l) = \begin{cases} 1-\exp\!\big(-A\,(\mathrm{SNR}(l)-B)\big), & \text{if } \exp\!\big(-A\,(\mathrm{SNR}(l)-B)\big) < 1, \\ 0, & \text{otherwise.} \end{cases}$$
+      </div>
+      <p>
+        The time-dependent specific tonality in each band is then:
+      </p>
+      <div class="equation-block">
+        $$T'(l,z) = c_T\,q(l)\,N'_\mathrm{tonal}(l,z)$$
+      </div>
+      <p>
+        where $c_T$ is a calibration factor. An overall time-varying tonality is the maximum across bands:
+      </p>
+      <div class="equation-block">
+        $$T(l) = \max_{z}\, T'(l,z)$$
+      </div>
+      <p>
+        A single representative value $T$ is obtained by time-averaging $T(l)$ over frames where tonality exceeds a small threshold, discarding the initial transient.
+      </p>
+      <p>
+        Because this approach works in the loudness domain within an explicit auditory model, it naturally accounts for psychoacoustic effects that simpler models handle only approximately: absolute audibility (through the hearing threshold), level dependence (through the nonlinear loudness map), and fine temporal resolution (through running autocorrelation). The output can be represented as a single scalar or as tonality-versus-time and tonality-versus-frequency information.
+      </p>
+
+      <!-- Section 4 -->
+      <h2 id="comparison">4. Comparison and discussion</h2>
+      <p>
+        The two model families share the broad goal of quantifying tonality on a perceptually calibrated scale, but differ fundamentally in their signal representations and psychoacoustic assumptions.
+      </p>
+      <p>
+        The Aures family operates in the spectral domain: it identifies tonal components explicitly and combines them through empirical weighting functions. This makes the model transparent and computationally lightweight, but means its accuracy depends on the quality of the tone extraction step. For complex spectra with overlapping components or rapidly changing operating conditions — such as EV motor orders sweeping in frequency — the explicit extraction step can introduce errors.
+      </p>
+      <p>
+        The ECMA-418-2 hearing model operates in the loudness and autocorrelation domains. It does not need to identify individual tonal components before computing tonality; instead, periodicity and tonality emerge jointly from the auditory model. This makes it more robust for complex and time-varying sounds, at the cost of greater computational complexity and reduced interpretability.
+      </p>
+      <p>
+        For EV cabin noise in particular, ECMA-418-2 is generally regarded as the more appropriate tool, because EV powertrains generate prominent, order-tracking tonal components over a wide speed range in an otherwise relatively quiet background. However, the improved Aures formulation of Estreder et al. (2023) has narrowed this gap by addressing the spectral resolution and weighting limitations of the original 1985 model.
+      </p>
+
+      <!-- References -->
+      <h2 id="references">References</h2>
+      <div class="references">
+        <ol>
+          <li id="ref-aures">Aures, W. (1985). <em>A procedure for calculating auditory roughness</em>. Acustica, 58(5), 268–281.</li>
+          <li>Estreder, A., et al. (2023). An improved Aures tonality model for complex sounds. <em>Journal of the Acoustical Society of America</em>.</li>
+          <li id="ref-ecma">ECMA International. (2022). <em>ECMA-418-2: Psychoacoustic metrics for ITT equipment — Part 2: Models based on human perception</em>. 2nd ed.</li>
+          <li>ISO 1996-2:2017. <em>Acoustics — Description, measurement and assessment of environmental noise — Part 2: Determination of sound pressure levels</em>. ISO.</li>
+        </ol>
+      </div>
 
     </article>
 
@@ -420,39 +516,47 @@
     <aside id="sidebar">
 
       <div class="sidebar-box">
-        <div class="sidebar-box-title">Related topics</div>
+        <div class="sidebar-box-title">Related concepts</div>
         <ul>
-          <li><a href="#">Architectural acoustics</a></li>
-          <li><a href="#">Room modes</a></li>
-          <li><a href="#">Reverberation time</a></li>
-          <li><a href="#">Sound insulation</a></li>
-          <li><a href="#">Environmental noise</a></li>
-          <li><a href="#">Vibration control</a></li>
-          <li><a href="#">Speech intelligibility</a></li>
+          <li><a href="#">Psychoacoustics</a></li>
+          <li><a href="#">Critical bands</a></li>
+          <li><a href="#">Loudness (Zwicker)</a></li>
+          <li><a href="#">Masking</a></li>
+          <li><a href="#">Roughness</a></li>
+          <li><a href="#">Sharpness</a></li>
+          <li><a href="#">Fluctuation strength</a></li>
         </ul>
       </div>
 
       <div class="sidebar-box">
-        <div class="sidebar-box-title">Standards &amp; guidance</div>
+        <div class="sidebar-box-title">Standards</div>
         <ul>
-          <li><a href="#">BS 8233</a></li>
+          <li><a href="#">ECMA-418-2</a></li>
+          <li><a href="#">ISO 1996-2</a></li>
+          <li><a href="#">DIN 45681</a></li>
           <li><a href="#">BS 4142</a></li>
-          <li><a href="#">BS 6472</a></li>
-          <li><a href="#">BB93 (schools)</a></li>
-          <li><a href="#">HTM 08-01 (NHS)</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <div class="sidebar-box-title">Applications</div>
+        <ul>
+          <li><a href="#">EV NVH</a></li>
+          <li><a href="#">ICEV cabin noise</a></li>
+          <li><a href="#">Environmental noise</a></li>
+          <li><a href="#">Product sound quality</a></li>
         </ul>
       </div>
 
     </aside>
 
-  </div><!-- /#content -->
+  </div>
 
   <footer id="footer">
-    © 2026 Li Acoustics Ltd. &nbsp;·&nbsp; Registered in England and Wales &nbsp;·&nbsp;
+    © 2026 Li Acoustics Ltd. &nbsp;·&nbsp; United Kingdom &nbsp;·&nbsp;
     <a href="mailto:hello@liacoustics.co.uk">hello@liacoustics.co.uk</a>
   </footer>
 
-</div><!-- /.page -->
-
+</div>
 </body>
 </html>
