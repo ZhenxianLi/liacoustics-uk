@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Li Acoustics</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Linux Libertine', 'Georgia', 'Times New Roman', serif;
+      font-size: 16px;
+      background: #fff;
+      color: #202122;
+      line-height: 1.6;
+    }
+
+    a { color: #3366cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Page shell ── */
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── Site header ── */
+    #site-header {
+      border-bottom: 1px solid #a7d7f9;
+      padding: 0.6rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-name {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #202122;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    /* ── Article layout ── */
+    #content {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 0 3rem;
+    }
+
+    /* ── Main column ── */
+    #main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Article title */
+    h1.article-title {
+      font-family: 'Linux Libertine', 'Georgia', serif;
+      font-size: 2rem;
+      font-weight: normal;
+      border-bottom: 1px solid #a2a9b1;
+      padding-bottom: 0.2rem;
+      margin-bottom: 0.5rem;
+      color: #000;
+    }
+
+    .article-subtitle {
+      font-size: 0.9rem;
+      color: #54595d;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    /* Lead paragraph */
+    .lead {
+      margin-bottom: 1rem;
+    }
+
+    /* Section headings */
+    h2 {
+      font-family: 'Linux Libertine', 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      border-bottom: 1px solid #a2a9b1;
+      padding-bottom: 0.2rem;
+      margin: 1.6rem 0 0.6rem;
+      color: #000;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 1rem 0 0.3rem;
+      color: #202122;
+    }
+
+    p { margin-bottom: 0.8rem; }
+
+    /* ── Infobox (right-aligned) ── */
+    .infobox {
+      float: right;
+      clear: right;
+      margin: 0 0 1rem 1.5rem;
+      border: 1px solid #a2a9b1;
+      background: #f8f9fa;
+      font-size: 0.85rem;
+      width: 260px;
+    }
+
+    .infobox-title {
+      background: #cee0f2;
+      text-align: center;
+      font-weight: bold;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .infobox-image {
+      width: 100%;
+      padding: 0.6rem;
+      text-align: center;
+    }
+
+    .infobox-image svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .infobox-caption {
+      font-size: 0.78rem;
+      color: #54595d;
+      text-align: center;
+      padding: 0 0.6rem 0.4rem;
+    }
+
+    .infobox table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .infobox td {
+      padding: 0.25rem 0.6rem;
+      vertical-align: top;
+      border-top: 1px solid #eaecf0;
+    }
+
+    .infobox td:first-child {
+      font-weight: bold;
+      white-space: nowrap;
+      color: #202122;
+    }
+
+    /* ── Table of contents ── */
+    #toc {
+      border: 1px solid #a2a9b1;
+      background: #f8f9fa;
+      display: inline-block;
+      padding: 0.6rem 1rem 0.6rem 0.8rem;
+      margin: 0.6rem 0 1rem;
+      font-size: 0.9rem;
+      min-width: 200px;
+    }
+
+    #toc .toc-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+
+    #toc ol {
+      padding-left: 1.4rem;
+    }
+
+    #toc li { margin: 0.15rem 0; }
+
+    #toc ol ol {
+      padding-left: 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-box {
+      border: 1px solid #a2a9b1;
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-box-title {
+      background: #cee0f2;
+      padding: 0.3rem 0.6rem;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-box ul {
+      list-style: none;
+      padding: 0.4rem 0.6rem;
+    }
+
+    .sidebar-box li {
+      padding: 0.15rem 0;
+      border-bottom: 1px solid #eaecf0;
+    }
+
+    .sidebar-box li:last-child { border-bottom: none; }
+
+    /* ── Figure ── */
+    figure {
+      float: right;
+      clear: right;
+      margin: 0 0 0.8rem 1.2rem;
+      border: 1px solid #a2a9b1;
+      background: #f8f9fa;
+      padding: 4px;
+      width: 220px;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    figure svg { width: 100%; }
+    figcaption { padding: 4px 2px 2px; color: #54595d; }
+
+    /* ── Footer ── */
+    #footer {
+      border-top: 1px solid #a2a9b1;
+      padding: 1rem 0;
+      font-size: 0.82rem;
+      color: #54595d;
+      text-align: center;
+    }
+
+    /* ── Utility ── */
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    @media (max-width: 680px) {
+      #content { flex-direction: column; }
+      #sidebar { width: 100%; }
+      .infobox { float: none; width: 100%; margin: 0 0 1rem; }
+      figure { float: none; width: 100%; margin: 0 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Site header -->
+  <header id="site-header">
+    <span class="site-name">Li Acoustics</span>
+    <nav class="site-nav">
+      <a href="#">Services</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Content -->
+  <div id="content">
+
+    <!-- Main article -->
+    <article id="main" class="clearfix">
+
+      <h1 class="article-title">Li Acoustics</h1>
+      <p class="article-subtitle">Acoustic consultancy practice · United Kingdom</p>
+
+      <!-- Infobox -->
+      <div class="infobox">
+        <div class="infobox-title">Li Acoustics Ltd.</div>
+        <div class="infobox-image">
+          <!-- Standing wave illustration -->
+          <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
+            <rect width="240" height="90" fill="#fff"/>
+            <!-- mode 1 -->
+            <path d="M10,45 Q70,5 130,45 Q190,85 230,45" fill="none" stroke="#3366cc" stroke-width="1.5"/>
+            <!-- mode 2 faint -->
+            <path d="M10,45 Q40,15 70,45 Q100,75 130,45 Q160,15 190,45 Q210,65 230,45" fill="none" stroke="#3366cc" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.45"/>
+            <!-- node markers -->
+            <circle cx="10"  cy="45" r="2.5" fill="#202122"/>
+            <circle cx="130" cy="45" r="2.5" fill="#202122"/>
+            <circle cx="230" cy="45" r="2.5" fill="#202122"/>
+            <!-- axis -->
+            <line x1="10" y1="45" x2="230" y2="45" stroke="#a2a9b1" stroke-width="0.7"/>
+          </svg>
+        </div>
+        <div class="infobox-caption">Standing-wave modes in a rectangular room</div>
+        <table>
+          <tr><td>Founded</td><td>2018</td></tr>
+          <tr><td>Location</td><td>London, UK</td></tr>
+          <tr><td>Speciality</td><td>Architectural &amp; environmental acoustics</td></tr>
+          <tr><td>Website</td><td><a href="#">liacoustics.co.uk</a></td></tr>
+        </table>
+      </div>
+
+      <!-- Lead -->
+      <p class="lead">
+        <b>Li Acoustics</b> is a specialist acoustic consultancy based in the United Kingdom,
+        providing services in <a href="#">architectural acoustics</a>,
+        <a href="#">environmental noise assessment</a>, and
+        <a href="#">vibration control</a> for residential, commercial, and performance-space projects.
+      </p>
+      <p>
+        Founded in 2018, the practice applies evidence-based acoustic engineering to produce
+        environments that are both functionally correct and perceptually comfortable.
+        Projects range from recording studios and auditoria to planning-stage noise surveys for
+        mixed-use developments.
+      </p>
+
+      <!-- TOC -->
+      <div id="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#background">Background</a></li>
+          <li><a href="#services">Services</a>
+            <ol>
+              <li><a href="#room-acoustics">Room acoustics</a></li>
+              <li><a href="#noise-control">Noise &amp; vibration</a></li>
+              <li><a href="#av">AV systems</a></li>
+            </ol>
+          </li>
+          <li><a href="#methodology">Methodology</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </div>
+
+      <!-- Background -->
+      <h2 id="background">Background</h2>
+      <p>
+        <a href="#">Acoustics</a> is the branch of physics concerned with the study of mechanical
+        waves — including sound, infrasound, and ultrasound — and their interaction with matter.
+        Applied architectural acoustics addresses how sound behaves within built spaces, influencing
+        intelligibility, reverberation time (<i>T</i><sub>60</sub>), and occupant comfort.
+      </p>
+      <p>
+        Li Acoustics was established to address a gap in practice between high-level acoustic
+        modelling and on-site delivery. The consultancy works alongside architects, engineers, and
+        contractors from <a href="#">RIBA Stage 1</a> through post-occupancy evaluation.
+      </p>
+
+      <!-- Services -->
+      <h2 id="services">Services</h2>
+
+      <figure>
+        <!-- RT60 decay curve -->
+        <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="130" fill="#fff"/>
+          <!-- axes -->
+          <line x1="30" y1="10" x2="30" y2="105" stroke="#202122" stroke-width="1"/>
+          <line x1="30" y1="105" x2="185" y2="105" stroke="#202122" stroke-width="1"/>
+          <!-- axis labels -->
+          <text x="14" y="58" font-size="9" fill="#54595d" transform="rotate(-90,14,58)">Level (dB)</text>
+          <text x="100" y="122" font-size="9" fill="#54595d" text-anchor="middle">Time (s)</text>
+          <!-- decay line -->
+          <polyline points="30,18 55,38 80,55 105,68 130,79 155,88 180,96" fill="none" stroke="#3366cc" stroke-width="1.8"/>
+          <!-- T60 annotation -->
+          <line x1="30" y1="18" x2="180" y2="18" stroke="#a2a9b1" stroke-width="0.6" stroke-dasharray="3 2"/>
+          <line x1="30" y1="78" x2="180" y2="78" stroke="#a2a9b1" stroke-width="0.6" stroke-dasharray="3 2"/>
+          <text x="36" y="16" font-size="7.5" fill="#54595d">0 dB</text>
+          <text x="36" y="76" font-size="7.5" fill="#54595d">−60 dB</text>
+          <!-- T60 bracket -->
+          <line x1="155" y1="18" x2="155" y2="88" stroke="#cc3333" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="157" y="56" font-size="8" fill="#cc3333">T₆₀</text>
+        </svg>
+        <figcaption>Typical reverberation decay curve; <i>T</i><sub>60</sub> is the time for the sound level to fall by 60 dB.</figcaption>
+      </figure>
+
+      <h3 id="room-acoustics">Room acoustics</h3>
+      <p>
+        Room acoustic design encompasses the control of <a href="#">reverberation time</a>,
+        early reflections, and low-frequency <a href="#">room modes</a>.
+        Li Acoustics uses a combination of <a href="#">geometric ray-tracing</a> software and
+        wave-based finite-element methods to predict and optimise acoustic conditions before
+        construction begins.
+      </p>
+
+      <h3 id="noise-control">Noise &amp; vibration control</h3>
+      <p>
+        Environmental noise assessments are conducted in accordance with
+        <a href="#">BS 4142:2014</a> and <a href="#">PPG 24</a> guidance.
+        Services include facade sound insulation design, mechanical plant noise surveys,
+        and structural vibration measurement to <a href="#">BS 6472</a> criteria.
+      </p>
+
+      <h3 id="av">AV systems consultancy</h3>
+      <p>
+        For performance and corporate venues, Li Acoustics provides independent specification
+        and procurement oversight for <a href="#">loudspeaker system</a> design, room
+        equalisation, and speech-intelligibility verification to <a href="#">STI</a> standards.
+      </p>
+
+      <!-- Methodology -->
+      <h2 id="methodology">Methodology</h2>
+      <p>
+        All projects follow a structured workflow: site survey and background noise measurement,
+        parametric acoustic modelling, design-team coordination, specification writing, and
+        post-completion measurement verification. Reports are produced to a standard suitable
+        for <a href="#">planning authority</a> submission where required.
+      </p>
+
+      <!-- Contact -->
+      <h2 id="contact">Contact</h2>
+      <p>
+        Enquiries may be directed to <a href="mailto:hello@liacoustics.co.uk">hello@liacoustics.co.uk</a>.
+        The practice is registered in England and Wales.
+      </p>
+
+    </article>
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+
+      <div class="sidebar-box">
+        <div class="sidebar-box-title">Related topics</div>
+        <ul>
+          <li><a href="#">Architectural acoustics</a></li>
+          <li><a href="#">Room modes</a></li>
+          <li><a href="#">Reverberation time</a></li>
+          <li><a href="#">Sound insulation</a></li>
+          <li><a href="#">Environmental noise</a></li>
+          <li><a href="#">Vibration control</a></li>
+          <li><a href="#">Speech intelligibility</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <div class="sidebar-box-title">Standards &amp; guidance</div>
+        <ul>
+          <li><a href="#">BS 8233</a></li>
+          <li><a href="#">BS 4142</a></li>
+          <li><a href="#">BS 6472</a></li>
+          <li><a href="#">BB93 (schools)</a></li>
+          <li><a href="#">HTM 08-01 (NHS)</a></li>
+        </ul>
+      </div>
+
+    </aside>
+
+  </div><!-- /#content -->
+
+  <footer id="footer">
+    © 2026 Li Acoustics Ltd. &nbsp;·&nbsp; Registered in England and Wales &nbsp;·&nbsp;
+    <a href="mailto:hello@liacoustics.co.uk">hello@liacoustics.co.uk</a>
+  </footer>
+
+</div><!-- /.page -->
+
+</body>
+</html>
