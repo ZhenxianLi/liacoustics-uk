@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" data-title-en="How Do We Measure Whether a Sound Is “Tonal”? · Li Acoustics" data-title-zh="如何衡量一个声音的“音调性”？· Li Acoustics">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Do We Measure Whether a Sound Is “Tonal”? · Li Acoustics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/site.css" />
+  <script src="../../assets/lang.js"></script>
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], tags: 'ams' },
+      options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="../../">Li Acoustics<span></span></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="../../"><span lang="en">Articles</span><span lang="zh">文章</span></a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-set-lang="zh" aria-pressed="false">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-tag"><span lang="en">Psychoacoustics · NVH</span><span lang="zh">心理声学 · NVH</span></div>
+  <h1 lang="en">How Do We Measure Whether a Sound Is “Tonal”?</h1>
+  <h1 lang="zh">如何衡量一个声音的“音调性”？</h1>
+  <p class="hero-sub" lang="en">
+    Inside the psychoacoustic models that quantify tonality — and why getting this right matters for electric vehicles.
+  </p>
+  <p class="hero-sub" lang="zh">
+    走进量化音调性的心理声学模型，以及为什么这对电动汽车尤为重要。
+  </p>
+  <div class="hero-meta">
+    <div class="avatar">ZL</div>
+    <div>
+      <strong style="color: var(--ink); font-family: var(--sans);">Zhenxian Li</strong><br>
+      <span lang="en">December 2025 &nbsp;<span class="sep">|</span>&nbsp; 12 min read</span>
+      <span lang="zh">2025 年 12 月 &nbsp;<span class="sep">|</span>&nbsp; 阅读约 12 分钟</span>
+    </div>
+  </div>
+</header>
+
+<!-- Article -->
+<main class="article-body cf">
+
+  <p lang="en">
+    When you sit inside an electric vehicle and notice a faint, persistent whine from the motor, your brain immediately picks it out from the background hum — even if, in pure decibels, it is no louder. That ability to perceive a <em>tonal</em> component embedded in broadband noise is the subject of <strong>psychoacoustic tonality</strong>, and engineering it correctly has become a central challenge in modern vehicle acoustics.
+  </p>
+  <p lang="zh">
+    坐在电动汽车里，你可能会注意到电机发出一种微弱而持续的啸叫。即使按分贝计算它并不更响，大脑也能立刻把它从背景噪声中分辨出来。这种在宽带噪声中感知到<em>音调</em>成分的能力，就是<strong>心理声学音调性（tonality）</strong>所研究的对象；如何正确地评价和控制它，已成为现代汽车声学的核心问题之一。
+  </p>
+  <p lang="en">
+    This article explains what tonality is, how it is measured, and how two leading computational models approach the problem differently.
+  </p>
+  <p lang="zh">
+    本文介绍什么是音调性、如何测量它，以及两种主流计算模型在处理这一问题时的不同思路。
+  </p>
+
+  <!-- TOC -->
+  <nav class="toc" lang="en">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#what-is-tonality">What is tonality?</a></li>
+      <li><a href="#prominence">Tone prominence descriptors</a>
+        <ol>
+          <li><a href="#tnr">Tone-to-noise ratio (TNR)</a></li>
+          <li><a href="#pr">Prominence ratio (PR)</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+        </ol>
+      </li>
+      <li><a href="#models">Two tonality models</a>
+        <ol>
+          <li><a href="#aures">Aures (1985)</a></li>
+          <li><a href="#ecma">ECMA-418-2 hearing model</a></li>
+        </ol>
+      </li>
+      <li><a href="#comparison">Comparison</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+  </nav>
+  <nav class="toc" lang="zh">
+    <div class="toc-label">目录</div>
+    <ol>
+      <li><a href="#what-is-tonality">什么是音调性？</a></li>
+      <li><a href="#prominence">音调突出度指标</a>
+        <ol>
+          <li><a href="#tnr">音噪比（TNR）</a></li>
+          <li><a href="#pr">突出比（PR）</a></li>
+          <li><a href="#limitations">局限性</a></li>
+        </ol>
+      </li>
+      <li><a href="#models">两种音调性模型</a>
+        <ol>
+          <li><a href="#aures">Aures 模型（1985）</a></li>
+          <li><a href="#ecma">ECMA-418-2 听觉模型</a></li>
+        </ol>
+      </li>
+      <li><a href="#comparison">比较</a></li>
+      <li><a href="#references">参考文献</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <h2 id="what-is-tonality"><span lang="en">What is tonality?</span><span lang="zh">什么是音调性？</span></h2>
+
+  <div class="fig-aside">
+    <svg viewBox="0 0 200 115" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="115" fill="#f9fafb"/>
+      <line x1="22" y1="95" x2="185" y2="95" stroke="#d1d5db" stroke-width="1"/>
+      <line x1="22" y1="10"  x2="22" y2="95"  stroke="#d1d5db" stroke-width="1"/>
+      <text x="104" y="109" font-size="9" fill="#9ca3af" text-anchor="middle" font-family="Inter, PingFang SC, sans-serif"><tspan lang="en">Frequency</tspan><tspan lang="zh">频率</tspan></text>
+      <text x="10"  y="55"  font-size="9" fill="#9ca3af" text-anchor="middle" font-family="Inter, PingFang SC, sans-serif" transform="rotate(-90,10,55)"><tspan lang="en">Level</tspan><tspan lang="zh">声级</tspan></text>
+      <!-- noise floor -->
+      <polyline points="22,72 50,70 80,68 110,67 140,68 165,70 185,73" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+      <!-- tones -->
+      <line x1="75"  y1="68" x2="75"  y2="25" stroke="#2563eb" stroke-width="2.5"/>
+      <line x1="120" y1="67" x2="120" y2="14" stroke="#2563eb" stroke-width="2.5"/>
+      <line x1="158" y1="69" x2="158" y2="40" stroke="#2563eb" stroke-width="2"/>
+      <!-- delta L -->
+      <line x1="128" y1="14" x2="128" y2="67" stroke="#ef4444" stroke-width="0.8" stroke-dasharray="3 2"/>
+      <text x="131" y="43" font-size="8" fill="#ef4444" font-family="Inter,sans-serif">ΔL</text>
+    </svg>
+    <div class="fig-caption" lang="en">Tonal components (blue) rising above a broadband noise floor; $\Delta L$ is the level excess driving tonality.</div>
+    <div class="fig-caption" lang="zh">高出宽带噪声底的音调成分（蓝色）；$\Delta L$ 为决定音调性的声级超出量。</div>
+  </div>
+
+  <p lang="en">
+    In psychoacoustics, <em>tonality</em> describes how strongly a listener perceives discrete pitch-like components in a sound — components that stand out above the surrounding noise. Two sounds can have identical overall loudness and yet feel completely different: one might be heard as a neutral roar, the other as an irritating whine.
+  </p>
+  <p lang="zh">
+    在心理声学中，<em>音调性</em>描述的是听者在多大程度上感知到声音中离散的、类似音高的成分，即那些高出周围噪声的成分。两个总响度相同的声音，听感可能完全不同：一个像中性的轰鸣，另一个则是恼人的啸叫。
+  </p>
+  <p lang="en">
+    Three factors govern this perception:
+  </p>
+  <p lang="zh">
+    这种感知主要取决于三个因素：
+  </p>
+  <ul lang="en">
+    <li>how much energy is concentrated in narrow spectral components;</li>
+    <li>how strongly those components are masked by neighbouring noise;</li>
+    <li>how the auditory system integrates information across time and across critical bands.</li>
+  </ul>
+  <ul lang="zh">
+    <li>有多少能量集中在窄带频谱成分中；</li>
+    <li>这些成分被相邻噪声掩蔽的程度；</li>
+    <li>听觉系统如何在时间上和各临界频带之间整合信息。</li>
+  </ul>
+  <p lang="en">
+    Tonal noise is consistently rated as more annoying than broadband noise at the same sound pressure level. This makes tonality a key metric in product sound quality engineering and in planning-law noise assessments, where regulators may require a penalty to be added to measured levels if tonal components are detected.
+  </p>
+  <p lang="zh">
+    在相同声压级下，含音调成分的噪声总是被评为比宽带噪声更令人烦扰。因此，音调性是产品声品质工程中的关键指标；在规划法规的噪声评估中，如果检测到音调成分，监管部门还可能要求在测量声级上加上修正量。
+  </p>
+
+  <!-- 2 -->
+  <h2 id="prominence"><span lang="en">Tone prominence descriptors</span><span lang="zh">音调突出度指标</span></h2>
+  <p lang="en">
+    Before tackling full perceptual models, engineers typically use simpler descriptors to locate and rank individual tonal components. These are fast to compute and well-suited to automated screening.
+  </p>
+  <p lang="zh">
+    在使用完整的感知模型之前，工程师通常先用较简单的指标来定位单个音调成分并排序。这些指标计算快，适合自动筛查。
+  </p>
+
+  <h3 id="tnr"><span lang="en">Tone-to-noise ratio</span><span lang="zh">音噪比</span></h3>
+  <p lang="en">
+    The <strong>tone-to-noise ratio (TNR)</strong> compares the level of a candidate tonal component $L_\mathrm{tone}$ to an estimate of the surrounding background $L_\mathrm{bg}$ derived from adjacent frequency groups:
+  </p>
+  <p lang="zh">
+    <strong>音噪比（TNR）</strong>将候选音调成分的声级 $L_\mathrm{tone}$ 与由相邻频率组估计出的背景声级 $L_\mathrm{bg}$ 进行比较：
+  </p>
+  <div class="eq">$$\mathrm{TNR} \approx L_\mathrm{tone} - L_\mathrm{bg} \quad [\mathrm{dB}]$$</div>
+  <p lang="en">
+    A large TNR means the tone rises well above its local noise floor and is likely audible as a discrete pitch.
+  </p>
+  <p lang="zh">
+    TNR 越大，说明该音调远高于局部噪声底，很可能被听成一个独立的音高。
+  </p>
+
+  <h3 id="pr"><span lang="en">Prominence ratio</span><span lang="zh">突出比</span></h3>
+  <p lang="en">
+    <strong>Prominence ratio (PR)</strong> follows the same idea but works in a critical-band representation. If the energy in the band containing the tone substantially exceeds that in the neighbouring bands, the component is flagged as prominent. Both TNR and PR appear in international standards (notably ISO 1996-2) as objective indicators.
+  </p>
+  <p lang="zh">
+    <strong>突出比（PR）</strong>思路相同，但在临界频带表示下计算。如果包含该音调的频带能量明显高于相邻频带，就把这一成分标记为突出。TNR 和 PR 都作为客观指标出现在国际标准中（特别是 ISO 1996-2）。
+  </p>
+
+  <h3 id="limitations"><span lang="en">Limitations</span><span lang="zh">局限性</span></h3>
+
+  <div class="callout" lang="en">
+    A tone barely exceeding the local noise floor can yield similar TNR values at very different absolute sound levels — yet its perceived salience can differ dramatically. Simple level-difference descriptors miss this.
+  </div>
+  <div class="callout" lang="zh">
+    一个刚刚高出局部噪声底的音调，在绝对声级相差很大的情况下可能得到相近的 TNR 值，但其感知上的显著程度却可能截然不同。简单的声级差指标无法反映这一点。
+  </div>
+
+  <p lang="en">
+    TNR and PR are not complete tonality models. They handle tones in isolation and cannot account for how multiple tones combine, how absolute hearing thresholds affect audibility, or how the total noise energy modulates the perception of each tonal component. These limitations motivated the development of full psychoacoustic tonality models.
+  </p>
+  <p lang="zh">
+    TNR 和 PR 并不是完整的音调性模型。它们孤立地处理每个音调，无法考虑多个音调如何叠加、绝对听阈如何影响可闻度，以及总噪声能量如何影响对各音调成分的感知。正是这些局限推动了完整心理声学音调性模型的发展。
+  </p>
+
+  <!-- 3 -->
+  <h2 id="models"><span lang="en">Two tonality models</span><span lang="zh">两种音调性模型</span></h2>
+  <p lang="en">
+    Two families of models dominate engineering practice. The <strong>Aures (1985)</strong> approach starts from identified spectral components and combines them through empirically derived weighting functions. The <strong>ECMA-418-2</strong> approach simulates auditory processing directly, using autocorrelation to detect periodicity within critical bands.
+  </p>
+  <p lang="zh">
+    工程实践中主要有两类模型。<strong>Aures（1985）</strong>方法从已识别的频谱成分出发，通过经验加权函数将它们组合起来；<strong>ECMA-418-2</strong> 方法则直接模拟听觉处理过程，用自相关检测各临界频带内的周期性。
+  </p>
+
+  <h3 id="aures"><span lang="en">Aures’ model (1985)</span><span lang="zh">Aures 模型（1985）</span></h3>
+  <p lang="en">
+    Aures’ model, named after its German term <em>Klanghaftigkeit</em> (symbol $K$), decomposes tonality into two contributions: the prominence of individual tonal components, and the degree to which the overall signal is dominated by tonal rather than noise energy.
+  </p>
+  <p lang="zh">
+    Aures 模型以德文术语 <em>Klanghaftigkeit</em>（符号 $K$）命名，它把音调性分解为两部分：单个音调成分的突出程度，以及整个信号中音调能量相对噪声能量的主导程度。
+  </p>
+  <p lang="en">
+    For each audible tonal component $k$ with level excess $\Delta L_k > 0$ above its background, centre frequency $f_k$, and bandwidth in Bark $\Delta z_k$, three weighting functions are applied. A <em>frequency weight</em> $w_2(f)$ — band-pass shaped, reflecting that the ear is most sensitive to tonal components in the mid-frequency range:
+  </p>
+  <p lang="zh">
+    对每个可闻的音调成分 $k$（高出背景的声级为 $\Delta L_k > 0$，中心频率为 $f_k$，以 Bark 计的带宽为 $\Delta z_k$），应用三个加权函数。其一是<em>频率权重</em> $w_2(f)$，呈带通形状，反映人耳对中频音调成分最敏感：
+  </p>
+  <div class="eq">
+    $$w_2(f)=\left(\frac{1}{1+0.2\!\left(\dfrac{0.7\,\mathrm{kHz}}{f}-\dfrac{f}{0.7\,\mathrm{kHz}}\right)^{\!2}}\right)^{\!0.29}$$
+  </div>
+  <p lang="en">
+    A <em>level-excess weight</em> $w_3(\Delta L)$ — saturating, because very large $\Delta L$ values do not produce proportionally larger increases in perceived tonality:
+  </p>
+  <p lang="zh">
+    其二是<em>声级超出量权重</em> $w_3(\Delta L)$，具有饱和特性，因为很大的 $\Delta L$ 并不会使感知音调性成比例地增加：
+  </p>
+  <div class="eq">$$w_3(\Delta L)=1-\exp\!\left(-\frac{\Delta L}{15\,\mathrm{dB}}\right)$$</div>
+  <p lang="en">
+    Together with a bandwidth weight $w_1(\Delta z)$, the combined tonal weight is a quadratic mean across all components:
+  </p>
+  <p lang="zh">
+    再加上带宽权重 $w_1(\Delta z)$，总的音调权重是对所有成分取平方和再开方：
+  </p>
+  <div class="eq">$$W_T = \sqrt{\sum_k \left[w_1'(\Delta z_k)\,w_2'(f_k)\,w_3'(\Delta L_k)\right]^2}$$</div>
+  <p lang="en">
+    The noise-dominance factor compares the loudness of the noise-only signal (tonal components removed), $N_G$, to the total loudness $N$:
+  </p>
+  <p lang="zh">
+    噪声主导因子比较去除音调成分后纯噪声信号的响度 $N_G$ 与总响度 $N$：
+  </p>
+  <div class="eq">$$W_{QT}=1-\frac{N_G}{N}$$</div>
+  <p lang="en">
+    Both contributions are combined into a single tonality value:
+  </p>
+  <p lang="zh">
+    两部分组合为单一的音调性数值：
+  </p>
+  <div class="eq">$$K \;=\; c\; W_T^{0.29}\; W_{QT}^{0.79}$$</div>
+  <p lang="en">
+    The calibration constant $c$ is set so that a 1 kHz reference tone at a prescribed level gives $K = 1$.
+  </p>
+  <p lang="zh">
+    校准常数 $c$ 的取值使规定声级下的 1 kHz 参考纯音得到 $K = 1$。
+  </p>
+
+  <h4><span lang="en">Improved variants (Estreder et al., 2023)</span><span lang="zh">改进版本（Estreder 等，2023）</span></h4>
+  <p lang="en">
+    A recent refinement replaces the noise-dominance factor with an explicit loudness weighting, using loudness levels $L_N$ (noise only) and $L_S$ (full signal):
+  </p>
+  <p lang="zh">
+    近期的一项改进用显式的响度加权代替噪声主导因子，使用响度级 $L_N$（仅噪声）和 $L_S$（完整信号）：
+  </p>
+  <div class="eq">$$W_L = 1 - \frac{L_N}{L_S}, \qquad \ell_m = \min\!\left(C_{1\mathrm{k},60}\,W_T^{0.29}\,W_L^{0.79},\;1\right)$$</div>
+  <p lang="en">
+    These adjustments improve agreement with listening tests for dense harmonic spectra — exactly the kind generated by EV motor orders sweeping across a wide speed range.
+  </p>
+  <p lang="zh">
+    对于密集的谐波频谱，这些调整提高了模型与听音实验结果的一致性，而电动汽车电机阶次在宽转速范围内扫频时产生的正是这类频谱。
+  </p>
+
+  <h3 id="ecma"><span lang="en">ECMA-418-2 hearing model</span><span lang="zh">ECMA-418-2 听觉模型</span></h3>
+
+  <div class="fig">
+    <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="560" height="160" fill="#f9fafb" rx="8"/>
+      <!-- pipeline boxes -->
+      <rect x="14"  y="55" width="90"  height="50" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+      <rect x="124" y="55" width="90"  height="50" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+      <rect x="234" y="55" width="90"  height="50" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+      <rect x="344" y="55" width="90"  height="50" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+      <rect x="454" y="55" width="90"  height="50" rx="6" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1.5"/>
+      <!-- arrows -->
+      <line x1="104" y1="80" x2="122" y2="80" stroke="#6b7280" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="214" y1="80" x2="232" y2="80" stroke="#6b7280" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="324" y1="80" x2="342" y2="80" stroke="#6b7280" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="434" y1="80" x2="452" y2="80" stroke="#6b7280" stroke-width="1.2" marker-end="url(#arr)"/>
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/>
+        </marker>
+      </defs>
+      <!-- labels -->
+      <g font-family="Inter, PingFang SC, sans-serif" font-size="9.5" text-anchor="middle" font-weight="600" fill="#1e40af">
+        <g lang="en">
+          <text x="59"  y="77">Auditory</text><text x="59"  y="89">filtering</text>
+          <text x="169" y="77">Auto-</text><text x="169" y="89">correlation</text>
+          <text x="279" y="77">Specific</text><text x="279" y="89">loudness</text>
+          <text x="389" y="77">SNR</text><text x="389" y="89">scaling</text>
+          <text x="499" y="77" fill="#1d4ed8" font-weight="700">Tonality</text>
+          <text x="280" y="148" fill="#9ca3af" font-weight="400" font-size="9">Processing pipeline of the ECMA-418-2 hearing model</text>
+        </g>
+        <g lang="zh" font-size="10.5">
+          <text x="59"  y="84">听觉滤波</text>
+          <text x="169" y="84">自相关</text>
+          <text x="279" y="84">特征响度</text>
+          <text x="389" y="84">信噪比缩放</text>
+          <text x="499" y="77" fill="#1d4ed8" font-weight="700">音调性</text>
+          <text x="280" y="148" fill="#9ca3af" font-weight="400" font-size="9.5">ECMA-418-2 听觉模型的处理流程</text>
+        </g>
+        <text x="499" y="91" fill="#1d4ed8" font-weight="700">T′(l, z)</text>
+      </g>
+    </svg>
+  </div>
+
+  <p lang="en">
+    The ECMA-418-2 model, implemented commercially in tools like HEAD acoustics’ “Tonality (Hearing Model)”, takes a fundamentally different approach: instead of extracting tones first and weighting them afterwards, it simulates the auditory system’s own processing.
+  </p>
+  <p lang="zh">
+    ECMA-418-2 模型（商业软件中的实现如 HEAD acoustics 的 “Tonality (Hearing Model)”）采用了根本不同的思路：它不是先提取音调再加权，而是模拟听觉系统自身的处理过程。
+  </p>
+  <p lang="en">
+    The key insight is that a periodic signal produces a pronounced peak in its <strong>autocorrelation function</strong> at its period, whereas random noise produces no such peak. By computing a normalised autocorrelation $\varphi_{l,z}(m)$ in each critical band $z$ and time block $l$, the model separates tonal from non-tonal energy directly in the loudness domain.
+  </p>
+  <p lang="zh">
+    其核心思想是：周期信号的<strong>自相关函数</strong>在其周期处有明显的峰，而随机噪声没有。模型在每个临界频带 $z$ 和时间块 $l$ 中计算归一化自相关 $\varphi_{l,z}(m)$，从而直接在响度域中把音调能量与非音调能量分开。
+  </p>
+  <p lang="en">
+    Tonal components are mapped to a <em>specific tonal loudness</em> $N'_\mathrm{tonal}(l,z)$; the residual noise loudness per band is:
+  </p>
+  <p lang="zh">
+    音调成分被映射为<em>音调特征响度</em> $N'_\mathrm{tonal}(l,z)$，各频带剩余的噪声响度为：
+  </p>
+  <div class="eq">$$N'_\mathrm{noise}(l,z) = N'_\mathrm{signal}(l,z)\,h_\mathrm{LP}(l) - N'_\mathrm{tonal}(l,z)$$</div>
+  <p lang="en">
+    An overall loudness signal-to-noise ratio across all bands then modulates the tonality estimate:
+  </p>
+  <p lang="zh">
+    然后用跨所有频带的总体响度信噪比来调节音调性估计：
+  </p>
+  <div class="eq">$$\mathrm{SNR}(l) = \frac{\displaystyle\max_{z}\, N'_\mathrm{tonal}(l,z)}{\varepsilon + \displaystyle\sum_{z} N'_\mathrm{noise}(l,z)}$$</div>
+  <p lang="en">
+    A nonlinear scaling factor $q(l)$, with constants $A$ and $B$ specified by the standard, compresses this SNR into a perceptually calibrated range. The final time–frequency tonality map is:
+  </p>
+  <p lang="zh">
+    非线性缩放因子 $q(l)$（常数 $A$、$B$ 由标准规定）把该信噪比压缩到经过感知校准的范围内。最终的时频音调性图为：
+  </p>
+  <div class="eq">$$T'(l,z) = c_T\,q(l)\,N'_\mathrm{tonal}(l,z)$$</div>
+  <p lang="en">
+    An overall time-varying tonality is the maximum across bands, $T(l) = \max_z T'(l,z)$, and a single representative value $T$ is obtained by time-averaging over frames exceeding a small threshold.
+  </p>
+  <p lang="zh">
+    随时间变化的总音调性取各频带的最大值，$T(l) = \max_z T'(l,z)$；对超过某一小阈值的帧做时间平均，即得到单一的代表值 $T$。
+  </p>
+
+  <!-- 4 -->
+  <h2 id="comparison"><span lang="en">Comparison</span><span lang="zh">比较</span></h2>
+  <p lang="en">
+    The two models share the goal of producing a perceptually calibrated tonality value, but their differences matter in practice.
+  </p>
+  <p lang="zh">
+    两种模型的目标都是给出经过感知校准的音调性数值，但它们的差异在实践中很重要。
+  </p>
+  <p lang="en">
+    Aures’ model is <strong>transparent and interpretable</strong>: you can trace every step from the identified tonal components through the weighting functions to the final $K$ value. This makes it useful for engineering diagnosis. Its weakness is that accuracy depends on the tone-extraction step — a step that can fail for complex, overlapping harmonic spectra.
+  </p>
+  <p lang="zh">
+    Aures 模型<strong>透明、易于解释</strong>：从识别出的音调成分，经过各加权函数，到最终的 $K$ 值，每一步都可以追溯，因此便于工程诊断。它的弱点是精度依赖于音调提取这一步，而对于复杂、相互重叠的谐波频谱，这一步可能失效。
+  </p>
+  <p lang="en">
+    ECMA-418-2 is <strong>more robust for complex and time-varying sounds</strong>. Because periodicity and tonality are estimated jointly within an auditory model, the method handles situations where classical spectral extraction would struggle: rapidly sweeping motor orders, tones close to the hearing threshold, or multiple harmonics interacting with masking noise. The trade-off is greater computational cost and a less intuitive signal chain.
+  </p>
+  <p lang="zh">
+    ECMA-418-2 <strong>对复杂和时变声音更稳健</strong>。由于周期性与音调性在听觉模型中被联合估计，它能处理传统频谱提取难以应对的情形：快速扫频的电机阶次、接近听阈的音调，或与掩蔽噪声相互作用的多个谐波。代价是计算量更大，信号链也不那么直观。
+  </p>
+
+  <div class="callout" lang="en">
+    For EV cabin noise — with its prominent, speed-tracking motor orders in an otherwise quiet background — ECMA-418-2 is generally the more appropriate choice. The improved Aures formulation of Estreder et al. (2023) has narrowed the gap, but the hearing-model approach remains the current benchmark.
+  </div>
+  <div class="callout" lang="zh">
+    对于电动汽车车内噪声（在安静的背景中有突出的、随转速变化的电机阶次），ECMA-418-2 通常是更合适的选择。Estreder 等（2023）改进的 Aures 公式缩小了差距，但听觉模型方法仍是目前的基准。
+  </div>
+
+  <hr class="divider" />
+
+  <h2 id="references"><span lang="en">References</span><span lang="zh">参考文献</span></h2>
+  <div class="references">
+    <ol>
+      <li>Aures, W. (1985). A procedure for calculating auditory roughness. <em>Acustica</em>, 58(5), 268–281.</li>
+      <li>Estreder, A., et al. (2023). An improved Aures tonality model for complex sounds. <em>Journal of the Acoustical Society of America</em>.</li>
+      <li>ECMA International (2022). <em>ECMA-418-2: Psychoacoustic metrics for ITT equipment — Part 2</em>. 2nd ed.</li>
+      <li>ISO 1996-2:2017. <em>Acoustics — Description, measurement and assessment of environmental noise — Part 2</em>. ISO.</li>
+    </ol>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer id="footer">
+  <div class="footer-inner">
+    <span>© 2026 Li Acoustics Ltd. · United Kingdom</span>
+    <a href="mailto:hello@liacoustics.co.uk">hello@liacoustics.co.uk</a>
+  </div>
+</footer>
+
+</body>
+</html>
